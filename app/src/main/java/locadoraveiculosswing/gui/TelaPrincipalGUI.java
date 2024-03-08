@@ -1,5 +1,6 @@
 package locadoraveiculosswing.gui;
 
+import locadoraveiculosswing.gui.cadastro.CadastroFabricanteEditarGUI;
 import locadoraveiculosswing.gui.cadastro.CadastroFabricanteGUI;
 
 public class TelaPrincipalGUI extends javax.swing.JFrame {
@@ -50,6 +51,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuCadastroFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastroFabricanteActionPerformed

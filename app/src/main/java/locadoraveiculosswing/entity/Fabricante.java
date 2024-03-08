@@ -1,0 +1,15 @@
+package locadoraveiculosswing.entity;
+
+public class Fabricante {
+
+    public int id;
+    public String nome;
+
+    public Fabricante(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    public Fabricante() {
+    }
+}
