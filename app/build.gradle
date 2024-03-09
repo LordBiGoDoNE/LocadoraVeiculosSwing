@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation project(':lib')
+    implementation 'com.formdev:flatlaf:3.4'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
 
