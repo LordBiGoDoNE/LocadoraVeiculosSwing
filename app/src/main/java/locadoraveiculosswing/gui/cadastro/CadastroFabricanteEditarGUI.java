@@ -11,19 +11,19 @@ import locadoraveiculosswing.gui.TelaPrincipalGUI;
 public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
 
     Fabricante fabricanteEditar = null;
-    CadastroFabricanteGUI cadastroFabricanteGUI;
+    CadastroFabricanteGUI parentDialog;
 
     public CadastroFabricanteEditarGUI(java.awt.Frame parent, boolean modal, CadastroFabricanteGUI parentDialog) {
         super(parent, modal);
-        
-        cadastroFabricanteGUI = parentDialog;
-        
+
+        this.parentDialog = parentDialog;
+
         initComponents();
     }
 
     public void carregar(Integer id) {
         fabricanteEditar = App.sqlUtil.selectPorClasse(Fabricante.class, id);
-        
+
         txtNome.setText(fabricanteEditar.nome);
     }
 
@@ -61,8 +61,8 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -127,8 +127,8 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
 
                 JOptionPane.showMessageDialog(null, "Fabricante Atualizado com sucesso!");
 
-                cadastroFabricanteGUI.carregarTabela();
-                
+                parentDialog.carregarTabela();
+
                 this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,9 +145,9 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
 
                 JOptionPane.showMessageDialog(null, "Fabricante Salvo com sucesso!");
 
+                parentDialog.carregarTabela();
+
                 limparComponentes();
-                
-                cadastroFabricanteGUI.carregarTabela();
             } catch (SQLException ex) {
                 Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage());

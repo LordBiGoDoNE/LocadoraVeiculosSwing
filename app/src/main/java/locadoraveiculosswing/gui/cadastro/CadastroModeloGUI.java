@@ -9,10 +9,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import locadoraveiculosswing.App;
 import locadoraveiculosswing.entity.Fabricante;
+import locadoraveiculosswing.entity.Modelo;
 
-public class CadastroFabricanteGUI extends javax.swing.JDialog {
+public class CadastroModeloGUI extends javax.swing.JDialog {
 
-    public CadastroFabricanteGUI(java.awt.Frame parent, boolean modal) {
+    public CadastroModeloGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
@@ -20,27 +21,28 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     }
 
     public void carregarTabela() {
-        List<Fabricante> lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
+        List<Modelo> lista = App.sqlUtil.selectPorClasse(Modelo.class, null);
 
-        Object[][] objs = new Object[lista.size()][Fabricante.class.getFields().length];
+        Object[][] objs = new Object[lista.size()][Modelo.class.getFields().length];
 
         int i = 0;
 
-        for (Fabricante fabricante : lista) {
-            objs[i][0] = fabricante.id;
-            objs[i][1] = fabricante.nome;
+        for (Modelo modelo : lista) {
+            objs[i][0] = modelo.id;
+            objs[i][1] = modelo.nome;
+            objs[i][2] = modelo.id_fabricante;
 
             i++;
         }
 
-        TableModel model = new DefaultTableModel(objs, new Object[]{"ID", "NOME"}) {
+        TableModel model = new DefaultTableModel(objs, new Object[]{"ID", "NOME", "ID Fabricante"}) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        tabelaFabricante.setModel(model);
+        tabelaModelo.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +50,7 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaFabricante = new javax.swing.JTable();
+        tabelaModelo = new javax.swing.JTable();
         sptInferior = new javax.swing.JSeparator();
         btnFechar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
@@ -57,7 +59,7 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tabelaFabricante.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaModelo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,7 +67,7 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(tabelaFabricante);
+        jScrollPane1.setViewportView(tabelaModelo);
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +137,7 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true, this);
+        CadastroModeloEditarGUI dialog = new CadastroModeloEditarGUI(null, true, this);
         dialog.setVisible(true);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -144,30 +146,29 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int idFabricante = (Integer) tabelaFabricante.getModel().getValueAt(tabelaFabricante.getSelectedRow(), 0);
+        int idModelo = (Integer) tabelaModelo.getModel().getValueAt(tabelaModelo.getSelectedRow(), 0);
 
-        CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true, this);
-        dialog.carregar(idFabricante);
+        CadastroModeloEditarGUI dialog = new CadastroModeloEditarGUI(null, true, this);
+        dialog.carregar(idModelo);
         dialog.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int idFabricante = (Integer) tabelaFabricante.getModel().getValueAt(tabelaFabricante.getSelectedRow(), 0);
+        int idModelo = (Integer) tabelaModelo.getModel().getValueAt(tabelaModelo.getSelectedRow(), 0);
 
-        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o fabricante selecionado?", "Confirmar Exclus�o", JOptionPane.YES_NO_OPTION);
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o modelo selecionado?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 
         switch (resposta) {
             case JOptionPane.YES_OPTION: {
                 try {
-                    App.sqlUtil.delete("fabricante", idFabricante);
+                    App.sqlUtil.delete("modelo", idModelo);
+
+                    JOptionPane.showMessageDialog(this, "Modelo Excluido com sucesso!");
                     
                     carregarTabela();
-
-                    JOptionPane.showMessageDialog(this, "Fabricante Excluido com sucesso!");
                 } catch (SQLException ex) {
-                    Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CadastroModeloGUI.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, ex.getMessage());
-
                 }
             }
 
@@ -193,14 +194,18 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -209,7 +214,7 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastroFabricanteGUI dialog = new CadastroFabricanteGUI(new javax.swing.JFrame(), true);
+                CadastroModeloGUI dialog = new CadastroModeloGUI(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -228,6 +233,6 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator sptInferior;
-    private javax.swing.JTable tabelaFabricante;
+    private javax.swing.JTable tabelaModelo;
     // End of variables declaration//GEN-END:variables
 }

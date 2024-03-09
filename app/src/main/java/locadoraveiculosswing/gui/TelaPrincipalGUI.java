@@ -1,7 +1,7 @@
 package locadoraveiculosswing.gui;
 
-import locadoraveiculosswing.gui.cadastro.CadastroFabricanteEditarGUI;
 import locadoraveiculosswing.gui.cadastro.CadastroFabricanteGUI;
+import locadoraveiculosswing.gui.cadastro.CadastroModeloGUI;
 
 public class TelaPrincipalGUI extends javax.swing.JFrame {
 
@@ -21,6 +21,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
         menuPrincipal = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         menuCadastroFabricante = new javax.swing.JMenuItem();
+        menuCadastroModelo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -34,6 +35,15 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
             }
         });
         menuCadastro.add(menuCadastroFabricante);
+
+        menuCadastroModelo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menuCadastroModelo.setText("Modelo");
+        menuCadastroModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadastroModeloActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuCadastroModelo);
 
         menuPrincipal.add(menuCadastro);
 
@@ -58,6 +68,11 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
         CadastroFabricanteGUI dialog = new CadastroFabricanteGUI(this, true);
         dialog.setVisible(true);
     }//GEN-LAST:event_menuCadastroFabricanteActionPerformed
+
+    private void menuCadastroModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastroModeloActionPerformed
+        CadastroModeloGUI dialog = new CadastroModeloGUI(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_menuCadastroModeloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,6 +113,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenuItem menuCadastroFabricante;
+    private javax.swing.JMenuItem menuCadastroModelo;
     private javax.swing.JMenuBar menuPrincipal;
     // End of variables declaration//GEN-END:variables
 }

@@ -73,7 +73,7 @@ public class SqlUtil {
 
         return retorno;
     }
-    
+
     public <T> T selectPorClasse(Class<T> clazz, int id) {
         String tabela = clazz.getSimpleName().toLowerCase();
         StringBuilder colunas = new StringBuilder();
@@ -194,14 +194,14 @@ public class SqlUtil {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-            
+
             throw e;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public int delete(String tabela, int id) {
+    public int delete(String tabela, int id) throws SQLException {
         String SQL_SELECT = String.format(
                 "DELETE FROM %s WHERE id=%d;", tabela, id);
 
@@ -211,12 +211,13 @@ public class SqlUtil {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-            return 0;
+            
+            throw e;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
-
+            
+            throw e;
         }
     }
 }
