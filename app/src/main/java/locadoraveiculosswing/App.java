@@ -2,18 +2,11 @@ package locadoraveiculosswing;
 
 import bancolib.SqlUtil;
 import com.formdev.flatlaf.FlatDarculaLaf;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import locadoraveiculosswing.entity.Cachorro;
-import locadoraveiculosswing.entity.Gato;
 import locadoraveiculosswing.gui.TelaPrincipalGUI;
 
 public class App {
 
-    public static SqlUtil sqlUtil = new SqlUtil("localhost", "18745", "postgres", "postgres", "VrPost@Server");
+    public static SqlUtil sqlUtil = new SqlUtil("localhost", "18745", "locadora", "postgres", "VrPost@Server");
 
     public static void main(String[] args) {
         initAparencia();
