@@ -12,4 +12,11 @@ public class Fabricante {
 
     public Fabricante() {
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
 }

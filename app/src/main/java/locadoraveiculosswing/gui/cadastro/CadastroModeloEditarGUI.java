@@ -1,16 +1,11 @@
 package locadoraveiculosswing.gui.cadastro;
 
-import java.awt.Component;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import locadoraveiculosswing.App;
 import locadoraveiculosswing.entity.Fabricante;
 import locadoraveiculosswing.entity.Modelo;
@@ -20,7 +15,6 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
 
     Modelo modeloEditar = null;
     CadastroModeloGUI parentDialog;
-    List<Fabricante> lista = null;
 
     public CadastroModeloEditarGUI(java.awt.Frame parent, boolean modal, CadastroModeloGUI parentDialog) {
         super(parent, modal);
@@ -36,32 +30,23 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
         modeloEditar = App.sqlUtil.selectPorClasse(Modelo.class, id);
 
         txtNome.setText(modeloEditar.nome);
-
-        for (Fabricante fabricante : lista) {
-            if (fabricante.id == modeloEditar.id_fabricante) {
-                int indiceCorreto = lista.indexOf(fabricante);
-
-                cboFabricante.setSelectedIndex(indiceCorreto);
-            }
-        }
-
     }
 
     public void carregarComboBoxFabricante() {
-        lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
+        List<Fabricante> lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
 
         Object[] valoresModel = new Object[lista.size()];
 
         int i = 0;
 
         for (Fabricante fabricante : lista) {
-            valoresModel[i] = fabricante.nome;
+            valoresModel[i] = fabricante;
 
             i++;
         }
 
         DefaultComboBoxModel model = new DefaultComboBoxModel(valoresModel);
-        
+
         cboFabricante.setModel(model);
     }
 
@@ -110,12 +95,12 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
             plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plnModeloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblFabricante)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome)
                     .addComponent(lblNome)
-                    .addComponent(cboFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(cboFabricante, 0, 200, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         plnModeloLayout.setVerticalGroup(
             plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +113,7 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
                 .addComponent(lblFabricante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,7 +136,7 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(plnModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnFechar))
@@ -167,7 +152,7 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
             int id = modeloEditar.id;
             String nome = txtNome.getText();
 
-            Fabricante fabricante = lista.get(cboFabricante.getSelectedIndex());
+            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
 
             String[] colunas = {"nome", "id_fabricante"};
             Object[] valores = {nome, fabricante.id};
@@ -187,7 +172,7 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
         } else {
             String nome = txtNome.getText();
 
-            Fabricante fabricante = lista.get(cboFabricante.getSelectedIndex());
+            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
 
             String[] colunas = {"nome", "id_fabricante"};
             Object[] valores = {nome, fabricante.id};
