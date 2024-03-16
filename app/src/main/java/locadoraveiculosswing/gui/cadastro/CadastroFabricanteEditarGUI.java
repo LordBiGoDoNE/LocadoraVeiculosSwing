@@ -1,15 +1,17 @@
 package locadoraveiculosswing.gui.cadastro;
 
+import bancolib.cadastro.FabricanteDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import locadoraveiculosswing.App;
-import locadoraveiculosswing.entity.Fabricante;
+import bancolib.entity.Fabricante;
 import locadoraveiculosswing.gui.TelaPrincipalGUI;
 
 public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
 
+    FabricanteDAO dao = new FabricanteDAO();
     Fabricante fabricanteEditar = null;
     CadastroFabricanteGUI parentDialog;
 
@@ -21,8 +23,8 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
         initComponents();
     }
 
-    public void carregar(Integer id) {
-        fabricanteEditar = App.sqlUtil.selectPorClasse(Fabricante.class, id);
+    public void carregar(Integer id) throws SQLException {
+        fabricanteEditar = dao.select(id);
 
         txtNome.setText(fabricanteEditar.nome);
     }
@@ -116,14 +118,10 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (fabricanteEditar != null) {
-            int id = fabricanteEditar.id;
-            String nome = txtNome.getText();
-
-            String[] colunas = {"nome"};
-            Object[] valores = {nome};
+            fabricanteEditar.nome = txtNome.getText();
 
             try {
-                App.sqlUtil.update("fabricante", id, colunas, valores);
+                dao.update(fabricanteEditar.id, fabricanteEditar);
 
                 JOptionPane.showMessageDialog(null, "Fabricante Atualizado com sucesso!");
 
@@ -137,11 +135,8 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
         } else {
             String nome = txtNome.getText();
 
-            String[] colunas = {"nome"};
-            Object[] valores = {nome};
-
             try {
-                App.sqlUtil.insert("fabricante", colunas, valores);
+                dao.insert(nome);
 
                 JOptionPane.showMessageDialog(null, "Fabricante Salvo com sucesso!");
 

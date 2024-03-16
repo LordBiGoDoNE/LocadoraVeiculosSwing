@@ -1,5 +1,9 @@
 package locadoraveiculosswing.gui;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import locadoraveiculosswing.gui.cadastro.CadastroCarroGUI;
 import locadoraveiculosswing.gui.cadastro.CadastroFabricanteGUI;
 import locadoraveiculosswing.gui.cadastro.CadastroModeloGUI;
 
@@ -8,7 +12,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
     public TelaPrincipalGUI() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -22,6 +26,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
         menuCadastro = new javax.swing.JMenu();
         menuCadastroFabricante = new javax.swing.JMenuItem();
         menuCadastroModelo = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,6 +50,15 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
         });
         menuCadastro.add(menuCadastroModelo);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        jMenuItem1.setText("Carro");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(jMenuItem1);
+
         menuPrincipal.add(menuCadastro);
 
         setJMenuBar(menuPrincipal);
@@ -65,14 +79,24 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuCadastroFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastroFabricanteActionPerformed
-        CadastroFabricanteGUI dialog = new CadastroFabricanteGUI(this, true);
-        dialog.setVisible(true);
+        CadastroFabricanteGUI dialog;
+        try {
+            dialog = new CadastroFabricanteGUI(this, true);
+            dialog.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuCadastroFabricanteActionPerformed
 
     private void menuCadastroModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastroModeloActionPerformed
         CadastroModeloGUI dialog = new CadastroModeloGUI(this, true);
         dialog.setVisible(true);
     }//GEN-LAST:event_menuCadastroModeloActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        CadastroCarroGUI dialog = new CadastroCarroGUI(this, true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,6 +135,7 @@ public class TelaPrincipalGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenuItem menuCadastroFabricante;
     private javax.swing.JMenuItem menuCadastroModelo;

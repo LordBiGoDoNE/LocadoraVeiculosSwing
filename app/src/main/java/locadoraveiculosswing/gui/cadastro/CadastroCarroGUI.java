@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import locadoraveiculosswing.App;
-import bancolib.entity.Fabricante;
+import bancolib.entity.Carro;
 import bancolib.entity.Modelo;
 
-public class CadastroModeloGUI extends javax.swing.JDialog {
+public class CadastroCarroGUI extends javax.swing.JDialog {
 
-    public CadastroModeloGUI(java.awt.Frame parent, boolean modal) {
+    public CadastroCarroGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
@@ -21,28 +21,32 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     }
 
     public void carregarTabela() {
-//        List<Modelo> lista = App.sqlUtil.selectPorClasse(Modelo.class, null);
+//        List<Carro> lista = App.sqlUtil.selectPorClasse(Carro.class, null);
 //
-//        Object[][] objs = new Object[lista.size()][Modelo.class.getFields().length];
+//        Object[][] objs = new Object[lista.size()][Carro.class.getFields().length];
 //
 //        int i = 0;
 //
-//        for (Modelo modelo : lista) {
-//            objs[i][0] = modelo.id;
-//            objs[i][1] = modelo.nome;
-//            objs[i][2] = modelo.id_fabricante;
+//        for (Carro Carro : lista) {
+//            objs[i][0] = Carro.id;
+//            objs[i][1] = Carro.id_fabricante;
+//            objs[i][2] = Carro.id_modelo;
+//            objs[i][3] = Carro.placa;
+//            objs[i][4] = Carro.cor;
+//            objs[i][5] = Carro.disponivel;
+//            objs[i][6] = Carro.valorlocacao;
 //
 //            i++;
 //        }
 //
-//        TableModel model = new DefaultTableModel(objs, new Object[]{"ID", "NOME", "ID Fabricante"}) {
+//        TableModel model = new DefaultTableModel(objs, new Object[]{"ID", "ID Fabricante", "ID MODELO", "PLACA", "COR", "DISPONIVEL", "VALOR LOCAÇÃO"}) {
 //            @Override
 //            public boolean isCellEditable(int row, int column) {
 //                return false;
 //            }
 //        };
 //
-//        tabelaModelo.setModel(model);
+//        tabelaCarro.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -54,9 +58,9 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
         btnIncluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        plnModelo = new javax.swing.JPanel();
+        plnCarro = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaModelo = new javax.swing.JTable();
+        tabelaCarro = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,9 +92,9 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
             }
         });
 
-        plnModelo.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
+        plnCarro.setBorder(javax.swing.BorderFactory.createTitledBorder("Carro"));
 
-        tabelaModelo.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCarro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -98,24 +102,24 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(tabelaModelo);
+        jScrollPane1.setViewportView(tabelaCarro);
 
-        javax.swing.GroupLayout plnModeloLayout = new javax.swing.GroupLayout(plnModelo);
-        plnModelo.setLayout(plnModeloLayout);
-        plnModeloLayout.setHorizontalGroup(
-            plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout plnCarroLayout = new javax.swing.GroupLayout(plnCarro);
+        plnCarro.setLayout(plnCarroLayout);
+        plnCarroLayout.setHorizontalGroup(
+            plnCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(plnModeloLayout.createSequentialGroup()
+            .addGroup(plnCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plnCarroLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        plnModeloLayout.setVerticalGroup(
-            plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        plnCarroLayout.setVerticalGroup(
+            plnCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 427, Short.MAX_VALUE)
-            .addGroup(plnModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(plnModeloLayout.createSequentialGroup()
+            .addGroup(plnCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plnCarroLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -128,7 +132,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(plnModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(plnCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sptInferior, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnIncluir)
@@ -144,7 +148,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(plnModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(plnCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sptInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,7 +165,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        CadastroModeloEditarGUI dialog = new CadastroModeloEditarGUI(null, true, this);
+        CadastroCarroEditarGUI dialog = new CadastroCarroEditarGUI(null, true, this);
         dialog.setVisible(true);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -170,28 +174,28 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int idModelo = (Integer) tabelaModelo.getModel().getValueAt(tabelaModelo.getSelectedRow(), 0);
+        int idCarro = (Integer) tabelaCarro.getModel().getValueAt(tabelaCarro.getSelectedRow(), 0);
 
-        CadastroModeloEditarGUI dialog = new CadastroModeloEditarGUI(null, true, this);
-        dialog.carregar(idModelo);
+        CadastroCarroEditarGUI dialog = new CadastroCarroEditarGUI(null, true, this);
+        dialog.carregar(idCarro);
         dialog.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-//        int idModelo = (Integer) tabelaModelo.getModel().getValueAt(tabelaModelo.getSelectedRow(), 0);
+//        int idCarro = (Integer) tabelaCarro.getModel().getValueAt(tabelaCarro.getSelectedRow(), 0);
 //
-//        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o modelo selecionado?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+//        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o carro selecionado?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 //
 //        switch (resposta) {
 //            case JOptionPane.YES_OPTION: {
 //                try {
-//                    App.sqlUtil.delete("modelo", idModelo);
+//                    App.sqlUtil.delete("carro", idCarro);
 //
-//                    JOptionPane.showMessageDialog(this, "Modelo Excluido com sucesso!");
+//                    JOptionPane.showMessageDialog(this, "Carro Excluido com sucesso!");
 //                    
 //                    carregarTabela();
 //                } catch (SQLException ex) {
-//                    Logger.getLogger(CadastroModeloGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(CadastroCarroGUI.class.getName()).log(Level.SEVERE, null, ex);
 //                    JOptionPane.showMessageDialog(null, ex.getMessage());
 //                }
 //            }
@@ -218,14 +222,22 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -238,7 +250,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastroModeloGUI dialog = new CadastroModeloGUI(new javax.swing.JFrame(), true);
+                CadastroCarroGUI dialog = new CadastroCarroGUI(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -256,8 +268,8 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel plnModelo;
+    private javax.swing.JPanel plnCarro;
     private javax.swing.JSeparator sptInferior;
-    private javax.swing.JTable tabelaModelo;
+    private javax.swing.JTable tabelaCarro;
     // End of variables declaration//GEN-END:variables
 }

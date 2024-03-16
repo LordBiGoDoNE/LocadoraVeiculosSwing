@@ -1,4 +1,4 @@
-package locadoraveiculosswing.entity;
+package bancolib.entity;
 
 public class Modelo {
 
@@ -14,4 +14,11 @@ public class Modelo {
 
     public Modelo() {
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
 }

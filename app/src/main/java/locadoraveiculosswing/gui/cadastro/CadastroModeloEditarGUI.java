@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import locadoraveiculosswing.App;
-import locadoraveiculosswing.entity.Fabricante;
-import locadoraveiculosswing.entity.Modelo;
+import bancolib.entity.Fabricante;
+import bancolib.entity.Modelo;
 import locadoraveiculosswing.gui.TelaPrincipalGUI;
 
 public class CadastroModeloEditarGUI extends javax.swing.JDialog {
@@ -27,27 +27,27 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
     }
 
     public void carregar(Integer id) {
-        modeloEditar = App.sqlUtil.selectPorClasse(Modelo.class, id);
+//        modeloEditar = App.sqlUtil.selectPorClasse(Modelo.class, id);
 
         txtNome.setText(modeloEditar.nome);
     }
 
     public void carregarComboBoxFabricante() {
-        List<Fabricante> lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
-
-        Object[] valoresModel = new Object[lista.size()];
-
-        int i = 0;
-
-        for (Fabricante fabricante : lista) {
-            valoresModel[i] = fabricante;
-
-            i++;
-        }
-
-        DefaultComboBoxModel model = new DefaultComboBoxModel(valoresModel);
-
-        cboFabricante.setModel(model);
+//        List<Fabricante> lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
+//
+//        Object[] valoresModel = new Object[lista.size()];
+//
+//        int i = 0;
+//
+//        for (Fabricante fabricante : lista) {
+//            valoresModel[i] = fabricante;
+//
+//            i++;
+//        }
+//
+//        DefaultComboBoxModel model = new DefaultComboBoxModel(valoresModel);
+//
+//        cboFabricante.setModel(model);
     }
 
     private void limparComponentes() {
@@ -148,48 +148,48 @@ public class CadastroModeloEditarGUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (modeloEditar != null) {
-            int id = modeloEditar.id;
-            String nome = txtNome.getText();
-
-            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
-
-            String[] colunas = {"nome", "id_fabricante"};
-            Object[] valores = {nome, fabricante.id};
-
-            try {
-                App.sqlUtil.update("modelo", id, colunas, valores);
-
-                JOptionPane.showMessageDialog(null, "Modelo Atualizado com sucesso!");
-
-                parentDialog.carregarTabela();
-
-                this.dispose();
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        } else {
-            String nome = txtNome.getText();
-
-            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
-
-            String[] colunas = {"nome", "id_fabricante"};
-            Object[] valores = {nome, fabricante.id};
-
-            try {
-                App.sqlUtil.insert("modelo", colunas, valores);
-
-                JOptionPane.showMessageDialog(null, "Modelo Salvo com sucesso!");
-
-                parentDialog.carregarTabela();
-
-                limparComponentes();
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        }
+//        if (modeloEditar != null) {
+//            int id = modeloEditar.id;
+//            String nome = txtNome.getText();
+//
+//            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
+//
+//            String[] colunas = {"nome", "id_fabricante"};
+//            Object[] valores = {nome, fabricante.id};
+//
+//            try {
+//                App.sqlUtil.update("modelo", id, colunas, valores);
+//
+//                JOptionPane.showMessageDialog(null, "Modelo Atualizado com sucesso!");
+//
+//                parentDialog.carregarTabela();
+//
+//                this.dispose();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                JOptionPane.showMessageDialog(null, ex.getMessage());
+//            }
+//        } else {
+//            String nome = txtNome.getText();
+//
+//            Fabricante fabricante = (Fabricante) cboFabricante.getModel().getSelectedItem();
+//
+//            String[] colunas = {"nome", "id_fabricante"};
+//            Object[] valores = {nome, fabricante.id};
+//
+//            try {
+//                App.sqlUtil.insert("modelo", colunas, valores);
+//
+//                JOptionPane.showMessageDialog(null, "Modelo Salvo com sucesso!");
+//
+//                parentDialog.carregarTabela();
+//
+//                limparComponentes();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(TelaPrincipalGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                JOptionPane.showMessageDialog(null, ex.getMessage());
+//            }
+//        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed

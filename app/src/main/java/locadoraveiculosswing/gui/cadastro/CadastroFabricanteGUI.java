@@ -1,5 +1,6 @@
 package locadoraveiculosswing.gui.cadastro;
 
+import bancolib.cadastro.FabricanteDAO;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -8,19 +9,21 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import locadoraveiculosswing.App;
-import locadoraveiculosswing.entity.Fabricante;
+import bancolib.entity.Fabricante;
 
 public class CadastroFabricanteGUI extends javax.swing.JDialog {
 
-    public CadastroFabricanteGUI(java.awt.Frame parent, boolean modal) {
+    FabricanteDAO dao = new FabricanteDAO();
+
+    public CadastroFabricanteGUI(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
 
         carregarTabela();
     }
 
-    public void carregarTabela() {
-        List<Fabricante> lista = App.sqlUtil.selectPorClasse(Fabricante.class, null);
+    public void carregarTabela() throws SQLException {
+        List<Fabricante> lista = dao.select();
 
         Object[][] objs = new Object[lista.size()][Fabricante.class.getFields().length];
 
@@ -170,9 +173,14 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int idFabricante = (Integer) tabelaFabricante.getModel().getValueAt(tabelaFabricante.getSelectedRow(), 0);
 
-        CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true, this);
-        dialog.carregar(idFabricante);
-        dialog.setVisible(true);
+        try {
+            CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true, this);
+            dialog.carregar(idFabricante);
+            dialog.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -183,8 +191,8 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
         switch (resposta) {
             case JOptionPane.YES_OPTION: {
                 try {
-                    App.sqlUtil.delete("fabricante", idFabricante);
-                    
+                    dao.delete(idFabricante);
+
                     carregarTabela();
 
                     JOptionPane.showMessageDialog(this, "Fabricante Excluido com sucesso!");
@@ -199,52 +207,6 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnExcluirActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CadastroFabricanteGUI dialog = new CadastroFabricanteGUI(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;

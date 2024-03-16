@@ -1,4 +1,4 @@
-package locadoraveiculosswing.entity;
+package bancolib.entity;
 
 public class Gato extends Animal {
 
