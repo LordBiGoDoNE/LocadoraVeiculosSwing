@@ -2,33 +2,34 @@ package bancolib.cadastro;
 
 import bancolib.BasicCrudDAO;
 import bancolib.ConexaoBanco;
-import bancolib.entity.Fabricante;
+import bancolib.entity.Modelo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
+public class ModeloDAO implements BasicCrudDAO<Modelo> {
 
     @Override
-    public Fabricante select(int id) throws SQLException {
+    public Modelo select(int id) throws SQLException {
         String query = String.format("""
                        SELECT
                        	*
                        FROM
-                       	fabricante f 
+                       	modelo m
                        WHERE 
                         id = %d
                        """, id);
 
         try (Statement stmt = ConexaoBanco.getConexao().createStatement(); ResultSet rs = stmt.executeQuery(query);) {
             if (rs.next()) {
-                Fabricante fabricante = new Fabricante();
-                fabricante.id = rs.getInt("id");
-                fabricante.nome = rs.getString("nome");
+                Modelo modelo = new Modelo();
+                modelo.id = rs.getInt("id");
+                modelo.nome = rs.getString("nome");
+                modelo.id_fabricante = rs.getInt("id_fabricante");
 
-                return fabricante;
+                return modelo;
             }
 
             return null;
@@ -38,41 +39,42 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
     }
 
     @Override
-    public List<Fabricante> select() throws SQLException {
+    public List<Modelo> select() throws SQLException {
         String query = """
                        SELECT
                        	*
                        FROM
-                       	fabricante f
+                       	modelo m
                        """;
 
         try (Statement stmt = ConexaoBanco.getConexao().createStatement(); ResultSet rs = stmt.executeQuery(query);) {
-            List<Fabricante> listaFabricante = new ArrayList<>();
+            List<Modelo> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Fabricante fabricante = new Fabricante();
-                fabricante.id = rs.getInt("id");
-                fabricante.nome = rs.getString("nome");
+                Modelo modelo = new Modelo();
+                modelo.id = rs.getInt("id");
+                modelo.nome = rs.getString("nome");
+                modelo.id_fabricante = rs.getInt("id_fabricante");
 
-                listaFabricante.add(fabricante);
+                lista.add(modelo);
             }
 
-            return listaFabricante;
+            return lista;
         } catch (SQLException e) {
             throw e;
         }
     }
 
     @Override
-    public int insert(Fabricante entity) throws SQLException {
+    public int insert(Modelo entity) throws SQLException {
 
         String insertSQL = String.format("""
                            INSERT INTO 
                             fabricante 
-                             (nome) 
+                             (nome, id_fabricante) 
                            VALUES 
-                             ('%s')
-                           """, entity.nome);
+                             ('%s', %d)
+                           """, entity.nome, entity.id_fabricante);
 
         try (Statement stmt = ConexaoBanco.getConexao().createStatement()) {
             return stmt.executeUpdate(insertSQL);
@@ -86,13 +88,15 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
     }
 
     @Override
-    public int update(int id, Fabricante fabricanteAtualizado) throws SQLException {
+    public int update(int id, Modelo entidadeAtualizada) throws SQLException {
         String updateSQL = String.format("""
-                           UPDATE fabricante 
-                             SET nome='%s'
+                           UPDATE modelo 
+                             SET 
+                                nome='%s',
+                                id_fabricante=%d
                            WHERE
                             id = %d;
-                           """, fabricanteAtualizado.nome, id);
+                           """, entidadeAtualizada.nome, entidadeAtualizada.id_fabricante, id);
 
         try (Statement stmt = ConexaoBanco.getConexao().createStatement()) {
             return stmt.executeUpdate(updateSQL);
@@ -109,7 +113,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
     public int delete(int id) throws SQLException {
         String deleteSQL = String.format("""
                            DELETE FROM 
-                            fabricante 
+                            modelo 
                            WHERE
                             id = %d
                            """, id);

@@ -133,10 +133,12 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         } else {
-            String nome = txtNome.getText();
+            Fabricante novoFabricante = new Fabricante();
+            
+            novoFabricante.nome = txtNome.getText();
 
             try {
-                dao.insert(nome);
+                dao.insert(novoFabricante);
 
                 JOptionPane.showMessageDialog(null, "Fabricante Salvo com sucesso!");
 
